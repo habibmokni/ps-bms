@@ -1,0 +1,27 @@
+// Global settings for the page header
+
+.sb-page-header {
+    // Base styling for the page header title
+    .sb-page-header-title {
+        line-height: normal;
+        font-size: 2.25rem;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        .sb-page-header-icon {
+            margin-right: 0.5rem;
+            display: inline-flex;
+            .feather,
+            i-feather {
+                height: 1.75rem;
+                width: 1.75rem;
+            }
+        }
+    }
+    // Base styling for the page header subtitle
+    .sb-page-header-subtitle {
+        font-size: 1.15rem;
+        margin: 0;
+    }
+}

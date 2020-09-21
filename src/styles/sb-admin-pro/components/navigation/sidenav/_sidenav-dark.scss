@@ -1,0 +1,7 @@
+// Extend Sidenav Dark Styling
+
+.sb-sidenav.sb-sidenav-dark {
+    .sb-sidenav-menu-nested {
+        border-left-color: fade-out($white, 0.85);
+    }
+}

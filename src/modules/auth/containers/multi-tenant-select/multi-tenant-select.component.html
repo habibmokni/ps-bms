@@ -1,0 +1,34 @@
+<sb-layout-auth
+    ><div class="container">
+        <div class="row justify-content-center">
+            <!-- Create Organization-->
+            <div class="col-xl-4 col-lg-6 col-md-8 col-sm-11">
+                <div class="card mt-5">
+                    <div class="card-body px-5 pt-5 text-center">
+                        <div class="h3 text-primary font-weight-300">Create</div>
+                        <p class="text-muted">Create an organization and invite new members</p>
+                        <div class="sb-icons-org-create align-items-center mx-auto"><i-feather class="sb-icon-users" name="users"></i-feather><fa-icon class="sb-icon-plus" [icon]='["fas", "plus"]'></fa-icon></div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body px-5 py-4">
+                        <div class="small text-center"><a class="btn btn-block btn-primary" data-cy="createNewOrganization" routerLink="/auth/org-create">Create new organization</a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Join Organization-->
+            <div class="col-xl-4 col-lg-6 col-md-8 col-sm-11">
+                <div class="card mt-5">
+                    <div class="card-body px-5 pt-5 text-center">
+                        <div class="h3 text-secondary font-weight-300">Join</div>
+                        <p class="text-muted">Enter an access code or request access to an existing organization</p>
+                        <div class="sb-icons-org-join align-items-center mx-auto"><i-feather class="sb-icon-user" name="user"></i-feather><fa-icon class="sb-icon-arrow d-inline-flex" [icon]='["fas", "long-arrow-alt-right"]'></fa-icon><i-feather class="sb-icon-users" name="users"></i-feather></div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body px-5 py-4">
+                        <div class="small text-center"><a class="btn btn-block btn-secondary" data-cy="joinOrganization" routerLink="/auth/org-join">Join an organization</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></sb-layout-auth
+>

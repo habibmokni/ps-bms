@@ -1,0 +1,22 @@
+li.nav-item.dropdown.no-caret.mr-3.sb-dropdown-notifications(
+    *ngIf='alertsService.alerts$ | async as alerts',
+    ngbDropdown,
+    [placement]='placement',
+    display='dynamic'
+)
+    a#navbarDropdownAlerts.btn.sb-btn-icon.sb-btn-transparent-dark.dropdown-toggle(
+        ngbDropdownToggle,
+        data-cy='alertsMenu',
+        role='button',
+        aria-haspopup='true',
+        aria-expanded='false'
+    )
+        i-feather(name='bell')
+    .dropdown-menu.border-0.shadow.animated--fade-in-up(
+        ngbDropdownMenu,
+        aria-labelledby='navbarDropdownAlerts'
+    )
+        h6.dropdown-header.sb-dropdown-notifications-header
+            i-feather.mr-2(name='bell')
+            | Alerts Center
+        sbpro-top-nav-alerts-item(*ngFor='let alert of alerts', [alert]='alert')

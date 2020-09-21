@@ -1,0 +1,36 @@
+sb-layout-auth
+    .container
+        .row.justify-content-center
+            // Create Organization
+            .col-xl-4.col-lg-6.col-md-8.col-sm-11
+                .card.mt-5
+                    .card-body.px-5.pt-5.text-center
+                        .h3.text-primary.font-weight-300 Create
+                        p.text-muted Create an organization and invite new members
+                        .sb-icons-org-create.align-items-center.mx-auto
+                            i-feather(name='users').sb-icon-users
+                            fa-icon([icon]='["fas", "plus"]').sb-icon-plus
+                    hr.my-0
+                    .card-body.px-5.py-4
+                        .small.text-center
+                            a.btn.btn-block.btn-primary(
+                                data-cy='createNewOrganization',
+                                routerLink='/auth/org-create'
+                            ) Create new organization
+            // Join Organization
+            .col-xl-4.col-lg-6.col-md-8.col-sm-11
+                .card.mt-5
+                    .card-body.px-5.pt-5.text-center
+                        .h3.text-secondary.font-weight-300 Join
+                        p.text-muted Enter an access code or request access to an existing organization
+                        .sb-icons-org-join.align-items-center.mx-auto
+                            i-feather(name='user').sb-icon-user
+                            fa-icon([icon]='["fas", "long-arrow-alt-right"]').sb-icon-arrow.d-inline-flex
+                            i-feather(name='users').sb-icon-users
+                    hr.my-0
+                    .card-body.px-5.py-4
+                        .small.text-center
+                            a.btn.btn-block.btn-secondary(
+                                data-cy='joinOrganization',
+                                routerLink='/auth/org-join'
+                            ) Join an organization

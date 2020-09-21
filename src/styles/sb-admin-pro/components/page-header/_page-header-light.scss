@@ -1,0 +1,22 @@
+// Contextual styling for a page header with a light background
+.sb-page-header.sb-page-header-light {
+    .sb-page-header-title {
+        color: $gray-900;
+        .sb-page-header-icon {
+            color: fade-out($gray-900, 0.5);
+        }
+    }
+    .sb-page-header-subtitle {
+        color: fade-out($gray-900, 0.5);
+    }
+    .breadcrumb {
+        background-color: fade-out($black, 0.95);
+        .breadcrumb-item,
+        .breadcrumb-item + .breadcrumb-item::before {
+            color: $body-color;
+        }
+        .breadcrumb-item a {
+            color: $primary;
+        }
+    }
+}

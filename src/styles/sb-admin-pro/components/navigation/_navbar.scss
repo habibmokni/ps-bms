@@ -1,0 +1,11 @@
+// Base styling for the global navbar
+
+.navbar {
+    font-size: 0.9rem;
+    .dropdown-menu {
+        top: calc(100% + #{$navbar-padding-y} + 0.5rem) !important;
+    }
+    .form-control {
+        font-size: 0.9rem;
+    }
+}

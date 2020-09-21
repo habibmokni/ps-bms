@@ -1,0 +1,59 @@
+// Custom scrollbar styling for the fixed layout
+.sb-nav-fixed {
+    #layoutSidenav {
+        #layoutSidenav_nav {
+            .sb-sidenav {
+                .sb-sidenav-menu {
+                    &::-webkit-scrollbar {
+                        display: block;
+                        width: 0.5rem;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        border-radius: 10rem;
+                        height: 3em;
+                        border-width: 0.1rem;
+                        border-style: solid;
+                        background-clip: padding-box;
+                    }
+                    &::-webkit-scrollbar-button {
+                        width: 0;
+                        height: 0;
+                        display: none;
+                    }
+                    &::-webkit-scrollbar-corner {
+                        background-color: transparent;
+                    }
+                    // Shows the custom scrollbar only on hover
+                    &:hover {
+                        &::-webkit-scrollbar {
+                            display: block;
+                        }
+                    }
+                }
+                // Scrollbar coloring for each sidebar color option
+                &.sb-sidenav-light {
+                    .sb-sidenav-menu {
+                        &::-webkit-scrollbar-thumb {
+                            background-color: $gray-400;
+                            border-color: rgba(0, 0, 0, 0);
+                        }
+                        &::-webkit-scrollbar-track {
+                            background-color: fade-out($gray-900, 0.95);
+                        }
+                    }
+                }
+                &.sb-sidenav-dark {
+                    .sb-sidenav-menu {
+                        &::-webkit-scrollbar-thumb {
+                            background-color: fade-out($white, 0.75);
+                            border-color: rgba(0, 0, 0, 0);
+                        }
+                        &::-webkit-scrollbar-track {
+                            background-color: fade-out($white, 0.9);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

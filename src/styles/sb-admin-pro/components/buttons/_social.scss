@@ -1,0 +1,16 @@
+// Use Bootstrap button variant mixin to create branded button styles
+//
+// Utilizes the brand colors declared in variables/colors.scss
+
+.sb-btn-facebook {
+    @include button-variant($facebook, $facebook);
+}
+.sb-btn-github {
+    @include button-variant($github, $github);
+}
+.sb-btn-google {
+    @include button-variant($google, $google);
+}
+.sb-btn-twitter {
+    @include button-variant($twitter, $twitter);
+}

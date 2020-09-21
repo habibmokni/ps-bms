@@ -1,0 +1,24 @@
+// Border Large - Custom utility
+
+.sb-border-lg {
+    border-width: $border-width-lg !important;
+}
+.sb-border-top-lg {
+    border-top-width: $border-width-lg !important;
+}
+.sb-border-right-lg {
+    border-right-width: $border-width-lg !important;
+}
+.sb-border-bottom-lg {
+    border-bottom-width: $border-width-lg !important;
+}
+.sb-border-left-lg {
+    border-left-width: $border-width-lg !important;
+}
+
+// Rebuild border after adding large borders
+@each $color, $value in $theme-colors {
+    .border-#{$color} {
+        border-color: $value !important;
+    }
+}

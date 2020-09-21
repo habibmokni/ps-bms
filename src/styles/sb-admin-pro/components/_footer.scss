@@ -1,0 +1,14 @@
+.sb-footer {
+    height: $footer-base-height;
+    display: flex;
+    align-items: center;
+    &.sb-footer-dark {
+        color: fade-out($white, 0.5);
+        a {
+            color: fade-out($white, 0.5);
+        }
+    }
+    &.sb-footer-light {
+        color: $text-muted;
+    }
+}

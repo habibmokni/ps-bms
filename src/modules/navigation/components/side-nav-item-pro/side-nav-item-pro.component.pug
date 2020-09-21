@@ -1,0 +1,21 @@
+a.nav-link(
+    (click)='toggle()',
+    [ngClass]='{active: isActive, collapsed: collapsed}'
+)
+    .sb-nav-link-icon(*ngIf='sideNavItem.icon')
+        i-feather([name]='sideNavItem.icon')
+    | {{sideNavItem.text}}
+    .sb-sidenav-collapse-arrow
+        fa-icon(
+            *ngIf='sideNavItem.submenu',
+            [icon]="['fas', 'angle-down']"
+        ).ml-auto
+nav.sb-sidenav-menu-nested.nav(#collapsibleSection, [ngClass]='{collapsed: collapsed}')
+    sbpro-side-nav-item.submenu(
+        *ngFor='let submenuItem of sideNavItem.submenu',
+        [sideNavItem]='submenuItem',
+        [ngClass]='{collapsed: collapsed}',
+        [hierarchy]='hierarchyExtension'
+    )
+
+// [routerLink]='sideNavItem.link', 

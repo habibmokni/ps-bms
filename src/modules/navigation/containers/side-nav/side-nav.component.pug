@@ -1,0 +1,14 @@
+nav#sidenavAccordion.sb-sidenav.sb-shadow-right([ngClass]='sidenavStyle', data-cy='sideNav')
+    .sb-sidenav-menu
+        .nav
+            ng-container(*ngFor='let section of sideNavSections')
+                .sb-sidenav-menu-heading(*ngIf='section.text') {{ section.text }}
+                ng-container(*ngFor='let item of section.items')
+                    sbpro-side-nav-item(
+                        [sideNavItem]='sideNavItems[item]'
+                    )
+    .sb-sidenav-footer
+        div
+            .small Logged in as:
+            div(*ngIf='userService.user$ | async as user')
+                | {{user.firstName}} {{user.lastName}}

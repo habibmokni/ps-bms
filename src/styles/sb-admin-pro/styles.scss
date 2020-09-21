@@ -1,0 +1,103 @@
+// Import SB Admin Pro variables
+@import './variables.scss';
+
+// Import Bootstrap
+@import 'bootstrap/scss/bootstrap.scss';
+
+// Import global styling from SB Asmin
+@import './base/global.scss';
+
+// Import layout styling from SB Admin
+@import './base/layout/authentication.scss';
+@import './base/layout/dashboard-default.scss';
+@import './base/layout/dashboard-fixed.scss';
+@import './base/layout/error.scss';
+
+// Import navigation styling from SB Admin
+@import './base/navigation/nav.scss';
+@import './base/navigation/topnav.scss';
+@import './base/navigation/sidenav/sidenav.scss';
+@import './base/navigation/sidenav/sidenav-dark.scss';
+@import './base/navigation/sidenav/sidenav-light.scss';
+
+// Import global stlying
+@import './global.scss';
+
+// Import Pro Layout Overrides
+@import './layout/dashboard-fixed.scss';
+
+// Import RTL styles
+@import './layout/dashboard-rtl.scss';
+
+// Import custom helper utilities
+@import './utilities/animation.scss';
+@import './utilities/background.scss';
+@import './utilities/border.scss';
+@import './utilities/dropdown.scss';
+@import './utilities/general.scss';
+@import './utilities/text.scss';
+@import './utilities/shadow.scss';
+
+// Import component styles
+
+// -- Alerts
+@import './components/alerts/icon.scss';
+@import './components/alerts/solid.scss';
+
+// -- Buttons
+@import './components/buttons/global.scss';
+@import './components/buttons/social.scss';
+@import './components/buttons/transparent.scss';
+@import './components/buttons/icon.scss';
+@import './components/buttons/sizing.scss';
+
+// -- Cards
+@import './components/cards/global.scss';
+@import './components/cards/advanced.scss';
+@import './components/cards/collapsable.scss';
+@import './components/cards/icon.scss';
+@import './components/cards/scrollable.scss';
+@import './components/cards/progress.scss';
+
+// -- Page header
+@import './components/page-header/page-header.scss';
+@import './components/page-header/page-header-dark.scss';
+@import './components/page-header/page-header-light.scss';
+
+// -- Forms
+@import './components/forms/checkboxes.scss';
+@import './components/forms/form-control.scss';
+
+// -- Navigation
+@import './components/navigation/navbar.scss';
+@import './components/navigation/topnav.scss';
+@import './components/navigation/nav-sticky.scss';
+@import './components/navigation/sidenav/sidenav.scss';
+@import './components/navigation/sidenav/sidenav-dark.scss';
+@import './components/navigation/sidenav/sidenav-light.scss';
+
+// -- Dropdowns
+@import './components/dropdowns/global.scss';
+@import './components/dropdowns/user.scss';
+@import './components/dropdowns/notifications.scss';
+
+// -- Icons
+@import './components/icons.scss';
+
+// -- Footer
+@import './components/footer.scss';
+
+// Import page styles
+
+// -- Multi-tenant flow pages
+@import './pages/auth-organizations.scss';
+
+// -- Error page effect
+@import './pages/error.scss';
+
+// Import styles customizing third party vendor librarires
+@import './vendor/datatables.scss';
+@import './vendor/chartjs.scss';
+
+// -- Style reference demo
+@import './pages/style-reference.scss';

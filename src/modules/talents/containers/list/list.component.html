@@ -1,0 +1,567 @@
+<sbpro-dashboard-head icon="bar-chart" title="Talents"></sbpro-dashboard-head>
+<div class="container-fluid mt-n10">
+  <sbpro-card>
+    <div class="card-header">
+      <div>
+        <button
+          class="btn btn-primary rounded-pill px-4 shadow-sm"
+          type="button"
+          id="add-talent-btn"
+          (click)="open(modalNewTalent)"
+        >
+          Neu Talent Hinzufügen
+        </button>
+      </div>
+    </div>
+    <!-- Talents Table -->
+    <div class="card-body">
+      <!-- <sb-ng-bootstrap-table [pageSize]="4"></sb-ng-bootstrap-table> -->
+      <div>
+        <p *ngIf="loadedProfiles.length < 1 && !isFetching">
+          No Talents Available !
+        </p>
+        <div class="table-responsive-sm">
+        <table class="table" *ngIf="loadedProfiles.length >= 1 && !isFetching">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Vorname</th>
+              <th scope="col">Nachname</th>
+              <th scope="col">Stelle</th>
+              <th scope="col">Status</th>
+              <th scope="col">Link</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let profil of loadedProfiles; let i = index">
+            <tr>
+              <th scope="row">
+                {{ i + 1 }} <!-- {{ profil.id }} -->
+              </th>
+              <th>{{ profil.fname }}</th>
+              <th>{{ profil.lname }}</th>
+              <th>{{ profil.job }}</th>
+              <th
+                [ngStyle]="{
+                  color: profil.status === 'Contacted' ? 'green' : 'red'
+                }"
+              >
+                {{ profil.status }}
+              </th>
+              <th>
+                <a href="{{ profil.profileLink }}" target="_blank">{{
+                  profil.profileLink
+                }}</a>
+              </th>
+              <th>
+                <button
+                (click)="open(modalDeleteTalent, {centered: true}); saveSelectedProfilID(profil.id)"
+                  class="btn btn-outline-red btn-icon shadow-sm"
+                  type="button"
+                >
+                  <i-feather name="Trash2"></i-feather>
+                </button>
+                &nbsp;
+                <button
+                  (click)="
+                    onFetchTalentProfil(profil.id); open(modalTalentProfil)
+                  "
+                  class="btn btn-outline-blue btn-icon shadow-sm"
+                  type="button"
+                >
+                  <i-feather name="user"></i-feather>
+                </button>
+                &nbsp;
+                <button
+                  (click)="
+                    onFetchTalentProfil(profil.id); open(modalEditTalent)
+                  "
+                  class="btn btn-outline-green btn-icon shadow-sm"
+                  type="button"
+                >
+                  <i-feather name="settings"></i-feather>
+                </button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+        <p *ngIf="isFetching && !error">Lädt...{{ error }}</p>
+        <div class="alert alert-danger" *ngIf="error">
+          <h1>An Error Occurred!</h1>
+          <p>{{ error }}</p>
+        </div>
+      </div>
+    </div>
+  </sbpro-card>
+</div>
+
+<!-- MODAL ADD TALENT FORM -->
+<ng-template #modalNewTalent let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Neu Talent Hinzufügen</h5>
+    <button
+      class="close"
+      type="button"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit(f.value); modal.close()" #f="ngForm">
+      <!-- access to the form Angular Created // f.value-->
+      <div class="form-row">
+        <div class="col form-group">
+          <label for="fname">Vorname </label>
+          <input
+            id="fname"
+            type="text"
+            class="form-control"
+            placeholder="Vorname"
+            ngModel
+            name="fname"
+            required
+          />
+        </div>
+        <!-- form-group end.// -->
+        <div class="col form-group">
+          <label for="lname">Nachname</label>
+          <input
+            id="lname"
+            type="text"
+            class="form-control"
+            placeholder="Nachname"
+            ngModel
+            name="lname"
+            required
+          />
+        </div>
+        <!-- form-group end.// -->
+      </div>
+      <!-- form-row end.// -->
+      <div class="form-group">
+        <label for="picture">Picture Link</label>
+        <input
+          id="picture"
+          type="text"
+          class="form-control"
+          placeholder="Profile Picture Link"
+          ngModel
+          name="picture"
+          required
+          #picture="ngModel"
+        />
+        <span class="help-block" *ngIf="!picture.valid && picture.touched"
+          >Bitte geben Sie eine valide URL ein !</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="email">Email Addresse</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          placeholder=""
+          ngModel
+          name="email"
+          required
+          email
+          #email="ngModel"
+        />
+        <span class="help-block" *ngIf="!email.valid && email.touched"
+          >Bitte geben Sie eine valide E-Mail ein !</span
+        >
+      </div>
+      <!-- form-group end.// -->
+      <div class="form-group">
+        <label>Status</label>
+        <div class="form-control">
+          <label class="radio-inline">
+            <input
+              type="radio"
+              name="status"
+              value="Contacted"
+              [(ngModel)]="status"
+            />
+            <span> Contacted </span>&nbsp;
+          </label>
+          <label class="radio-inline">
+            <input
+              type="radio"
+              name="status"
+              value="Not Contacted"
+              [(ngModel)]="status"
+            />
+            <span> Not Contacted </span>
+          </label>
+        </div>
+      </div>
+      <!-- form-group end.// -->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="tel">Tel. Nummer</label>
+          <input id="tel" type="text" class="form-control" ngModel name="tel" />
+        </div>
+        <!-- form-group end.// -->
+        <div class="form-group col-md-6">
+          <label for="job">Stelle</label>
+          <select
+            id="job"
+            class="form-control"
+            [ngModel]="defaultJob"
+            name="job"
+          >
+            <option *ngFor="let job of jobs" [value]="job.value">{{
+              job.display
+            }}</option>
+          </select>
+        </div>
+        <!-- form-group end.// -->
+      </div>
+      <!-- form-row.// -->
+      <div class="form-group">
+        <label for="profileLink">Profile Link</label>
+        <input
+          id="profileLink"
+          class="form-control"
+          type="url"
+          pattern="https?://.+"
+          placeholder="https://example.com"
+          ngModel
+          name="profileLink"
+          required
+          #profileLink="ngModel"
+        />
+        <span class="help-block" *ngIf="!profileLink.valid && profileLink.touched"
+          >Bitte geben Sie eine valide URL ein !</span
+        >
+      </div>
+      <!-- form-group end.// -->
+      <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea
+          class="form-control"
+          name="notes"
+          id="notes"
+          rows="3"
+          ngModel
+        ></textarea>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-danger"
+          type="button"
+          (click)="modal.close('Close Click')"
+        >
+          Abbrechen
+        </button>
+        <button id="add-talent-sumbit-btn" class="btn btn-primary" type="submit" [disabled]="!f.valid">
+          Bestätigen
+        </button>
+        <!-- (click)='modal.close("Save Click")' -->
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- MODAL TALENT PROFILE -->
+
+<ng-template #modalTalentProfil let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Talent Profil</h5>
+    <button
+      class="close"
+      type="button"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- {{ selectedProfil.fname }} -->
+
+    <div>
+      <div class="profile-userpic">
+        <img
+          [ngStyle]="{
+            border:
+              selectedProfil.status === 'Contacted'
+                ? '1px solid green'
+                : '1px solid red'
+          }"
+          [src]="selectedProfil.picture"
+          class="img-responsive"
+        />
+      </div>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><i>Vorname</i></td>
+            <td>
+              <b>{{ selectedProfil.fname }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td><i>Nachname</i></td>
+            <td>
+              <b>{{ selectedProfil.lname }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td><i>E-mail</i></td>
+            <td>
+              <b>{{ selectedProfil.email }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td><i>Tel.</i></td>
+            <td>
+              <b>{{ selectedProfil.tel }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td><i>Status</i></td>
+            <td
+              [ngStyle]="{
+                color: selectedProfil.status === 'Contacted' ? 'green' : 'red'
+              }"
+            >
+              <b>{{ selectedProfil.status }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td><i>Stelle</i></td>
+            <td>
+              <b>{{ selectedProfil.job }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td><i>Profil Link</i></td>
+            <!-- <td><b>{{ selectedProfil.profileLink }}</b></td> -->
+            <td>
+              <a [href]="selectedProfil.profileLink" target="_blank"
+                ><b>{{ selectedProfil.profileLink }}</b></a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td><i>Notes</i></td>
+            <td>
+              <b>{{ selectedProfil.notes }}</b>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-danger"
+      type="button"
+      (click)="modal.close('Close Click')"
+    >
+      Abbrechen
+    </button>
+    <!--<button class="btn btn-primary" type="submit">
+          Bestätigen
+        </button> -->
+    <!-- (click)='modal.close("Save Click")' -->
+  </div>
+</ng-template>
+
+
+<!-- MODAL DELETE PROFIL -->
+
+<ng-template #modalDeleteTalent let-modal >
+    <div class="modal-header">
+        <h5 class="modal-title">Löschung bestätigen</h5>
+        <button class="close" type="button" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <b style="color: red;">Sind Sie sicher, dass Sie dieses Talentprofil löschen möchten ?</b>
+        <br>
+         <i>Dieses Element wird sofort gelöscht. Sie können diese Aktion nicht rückgängig machen.</i>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-blue" type="button" (click)="modal.dismiss()">Abbrechen</button>
+        <button class="btn btn-danger" type="button" (click)="onDeleteTalents(selectedProfileID); modal.close()">Entfernen</button>
+    </div>
+</ng-template>
+
+<!-- MODAL EDIT PROFIL -->
+
+<ng-template #modalEditTalent let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editProfileLabel">Edit Talent Profile</h5>
+    <button
+      type="button"
+      class="close"
+      (click)="modal.dismiss()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form (ngSubmit)="onUpdateTalentProfil(f.value); modal.close()" #f="ngForm">
+      <!-- first Name -->
+      <div class="form-group row">
+        <label for="firstname" class="col-sm-4 col-form-label"
+          >First Name</label
+        >
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            id="fname"
+            [(ngModel)]="selectedProfil.fname"
+            name="fname"
+          />
+        </div>
+      </div>
+      <!-- last Name -->
+      <div class="form-group row">
+        <label for="lastname" class="col-sm-4 col-form-label">Last Name</label>
+        <div class="col-sm-8">
+          <input
+            type="text"
+            class="form-control"
+            id="lname"
+            [(ngModel)]="selectedProfil.lname"
+            name="lname"
+          />
+        </div>
+      </div>
+      <!-- email -->
+      <div class="form-group row">
+        <label for="email" class="col-sm-4 col-form-label">Email</label>
+        <div class="col-sm-8">
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            [(ngModel)]="selectedProfil.email"
+            name="email"
+          />
+        </div>
+      </div>
+      <!-- tel -->
+      <div class="form-group row">
+        <label for="tel" class="col-sm-4 col-form-label">Tel Nummer :</label>
+        <div class="col-sm-8">
+          <input
+            type="tel"
+            class="form-control"
+            id="tel"
+            name="tel"
+            [(ngModel)]="selectedProfil.tel"
+          />
+        </div>
+      </div>
+      <!-- picture -->
+      <div class="form-group row">
+        <label for="picture" class="col-sm-4 col-form-label">Bild :</label>
+        <div class="col-sm-8">
+          <input
+            type="picture"
+            class="form-control"
+            id="picture"
+            name="picture"
+            [(ngModel)]="selectedProfil.picture"
+          />
+        </div>
+      </div>
+      <!-- profileLink -->
+      <div class="form-group row">
+        <label for="profileLink" class="col-sm-4 col-form-label"
+          >Profile Link :</label
+        >
+        <div class="col-sm-8">
+          <input
+            type="profileLink"
+            class="form-control"
+            id="profileLink"
+            [(ngModel)]="selectedProfil.profileLink"
+            name="profileLink"
+          />
+        </div>
+      </div>
+      <!-- job/stelle -->
+      <div class="form-group row">
+        <label for="job" class="col-sm-4 col-form-label">Stelle</label>
+        <div class="col-sm-8">
+          <select type="job" name="job" class="form-control" id="job" [(ngModel)]="selectedProfil.job">
+            <option
+              *ngFor="let job of jobs"
+              [selected]="selectedProfil.job == job.value"
+              value="{{ job.value }}"
+              >{{ job.display }}</option
+            >
+          </select>
+        </div>
+      </div>
+      <!-- status -->
+      <div class="form-group row">
+        <label for="status" class="col-sm-4 col-form-label">Status</label>
+        <div class="col-sm-8">
+          <div class="form-group">
+            <div class="form-control">
+              <label class="radio-inline">
+                <input
+                  type="radio"
+                  name="status"
+                  value="Contacted"
+                  [(ngModel)]="selectedProfil.status"
+                  [checked]="selectedProfil.status === 'Contacted'"
+                />
+                <span> kontaktiert </span>&nbsp;
+              </label>
+              <label class="radio-inline">
+                <input
+                  type="radio"
+                  name="status"
+                  value="Not Contacted"
+                  [(ngModel)]="selectedProfil.status"
+                  [checked]="selectedProfil.status === 'Not Contacted'"
+                />
+                <span> Nicht kontaktiert </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- notes -->
+      <div class="form-group row">
+        <label for="notes" class="col-sm-4 col-form-label">Notes</label>
+        <div class="col-sm-8">
+          <textarea
+            class="form-control"
+            name="notes"
+            id="notes"
+            rows="3"
+            [(ngModel)]="selectedProfil.notes"
+          ></textarea>
+        </div>
+      </div>
+      <!-- footer -->
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-red"
+          (click)="modal.dismiss()"
+        >
+          Beenden
+        </button>
+        <button type="submit" class="btn btn-success">
+          Änderungen speichern
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

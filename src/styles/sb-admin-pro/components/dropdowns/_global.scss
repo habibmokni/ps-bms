@@ -1,0 +1,26 @@
+// Global overrides and restyling of the default Bootstrap dropdown menu
+
+.dropdown-menu {
+    border: none;
+    box-shadow: $box-shadow;
+    .dropdown-header {
+        display: flex;
+        align-items: center;
+    }
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        .sb-dropdown-item-icon {
+            height: 1em;
+            width: 1em;
+            margin-right: 0.5rem;
+            color: $gray-500;
+        }
+        &.active,
+        &:active {
+            .sb-dropdown-item-icon {
+                color: $white;
+            }
+        }
+    }
+}

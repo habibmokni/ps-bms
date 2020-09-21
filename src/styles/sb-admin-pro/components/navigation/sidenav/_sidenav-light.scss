@@ -1,0 +1,7 @@
+// Extend Sidenav Light Styling
+
+.sb-sidenav.sb-sidenav-light {
+    .sb-sidenav-menu-nested {
+        border-left-color: $gray-300;
+    }
+}
